@@ -2,13 +2,18 @@
 
 namespace csharpclicker
 {
-    public class Building(string name, float cps, float cost)
+    public class Building(string name, double cps, double cost)
     {
-        readonly float clicksPerSecond = cps;
-        readonly float baseCost = cost;
-        public string Name { get; set; } = name;
+        readonly double clicksPerSecond = cps;
+        readonly double baseCost = cost;
+        private string _name = name;
+        public string Name
+        {
+            get { return _name; }
+            set { _name = value; MainWindow.GetMW().UpdateDisplay(); }
+        }
 
-        private int Quantity { get; set; }
+        public int Quantity { get; set; } = 0;
 
         public static string[] GetBuildingTypes()
         {
@@ -17,22 +22,29 @@ namespace csharpclicker
 
         public static Building[] GetBuildings()
         {
-            string[] names = GetBuildingTypes();
-            Building[] buildingList = new Building[names.Length];
-            for (int i = 0; i < names.Length; i++)
-            {
-                string n = names[i];
-            }
-            return buildingList;
+            return BuildingJsonReader.GetBuildings();
         }
 
+        public double Buy(double score, int q = 1)
+        {
+            double price = this.GetPrice(q);
+            if (score >= price)
+            {
+                Quantity += q;
+                return price;
+            }
+            else
+            {
+                return -1;
+            }
+        }
 
-        public double Buy(int count = 1)
+        public double GetPrice(int count = 1)
         {
             return math.buildingPrice(baseCost, Quantity + count);
         }
 
-        public float GetClicks()
+        public double GetClicks()
         {
             return Quantity * clicksPerSecond;
 

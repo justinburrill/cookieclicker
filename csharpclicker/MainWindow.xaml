@@ -8,10 +8,8 @@
         Title="MainWindow" Height="600" Width="800">
     <Grid>
         <TextBlock Text="0" Name="scoreTB" FontSize="40"/>
-        <Ellipse HorizontalAlignment="Center" Height="300" Fill="NavajoWhite" VerticalAlignment="Center" Width="300" MouseUp="cookieButton_Click"/>
+        <Ellipse HorizontalAlignment="Center" Height="300" Fill="NavajoWhite" VerticalAlignment="Center" Width="300" MouseUp="CookieButton_Click"/>
         <StackPanel Name="ShopBox" HorizontalAlignment="Right" VerticalAlignment="Top" Width="170" Height="500" >
-            <!--<Border  BorderThickness="3" BorderBrush="black" />
-            <TextBlock Text="heyyyy" Height="100"/>-->
 
         </StackPanel>
 

@@ -1,6 +1,5 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
 
 namespace csharpclicker
 {
@@ -9,48 +8,82 @@ namespace csharpclicker
     /// </summary>
     public partial class MainWindow : Window
     {
-        float cookieScore = 0;
+        public static MainWindow GetMW()
+        {
+            return (MainWindow)Application.Current.MainWindow;
+        }
+        public double CookieScore { get; set; }
+        Building[] buildings = Building.GetBuildings();
+
         public MainWindow()
         {
             InitializeComponent();
-            Building[] building = Building.GetBuildings();
-            GenerateShop();
+            GenerateShop(buildings);
         }
 
 
-        public void GenerateShop(/*put building list in here*/)
+        public void GenerateShop(Building[] buildings)
         {
-            Building[] buildings = Building.GetBuildings();
             for (int i = 0; i < buildings.Length; i++)
             {
-                string n = buildings[i].Name;
-                int q = 0;
-                StackPanel box = new StackPanel
+                //Grid grid = new Grid();
+                TextBlock shopText = new() { Text = string.Format("{0} x{1}\nPrice: {2}", buildings[i].Name, buildings[i].Quantity, Math.Round(buildings[i].GetPrice())) };
+                Button buyButton = new();
+                buyButton.Click += BuyButton_Click;
+                buyButton.Content = "Buy";
+                buyButton.Name = String.Format("{0}BuyButton", buildings[i].Name);
+                StackPanel container = new()
                 {
                     Height = 100,
                     Width = 170,
-                    Children =
-                {
-                    new TextBlock
-                    {
-                        Text = string.Format("{0} x{1}", n, q)
-                    },
+                    Children = {
+                        shopText,
+                        buyButton
                 }
                 };
-                Border divider = new()
-                {
-                    BorderBrush = new SolidColorBrush(Colors.Black),
-                    BorderThickness = new Thickness(.2),
-                };
-                ShopBox.Children.Add(box);
-                ShopBox.Children.Add(divider);
+                //box.MouseUp += new System.Windows.Input.MouseButtonEventHandler(BuyButton_Click);
+                //Border divider = new()
+                //{
+                //    BorderBrush = new SolidColorBrush(Colors.Black),
+                //    BorderThickness = new Thickness(.2),
+                //};
+
+                // add elements to the screen
+                ShopBox.Children.Add(container);
+                //ShopBox.Children.Add(divider);
             }
         }
 
+
         public void ClickCookie()
         {
-            cookieScore++;
-            scoreTB.Text = ((int)cookieScore).ToString();
+            CookieScore++;
+            UpdateDisplay();
+        }
+
+        private void BuyButton_Click(object sender, EventArgs e)
+        {
+            string buildingName = scripts.strings.removeSuffix(((Button)sender).Name, "BuyButton");
+            foreach (Building b in buildings)
+            {
+                if (b.Name.Equals(buildingName))
+                {
+                    double result = b.Buy(CookieScore, 1);
+                    if (result == -1)
+                    {
+                        MessageBox.Show("Insufficient funds broke ass");
+                    }
+                    else
+                    {
+                        CookieScore = result;
+                    }
+                }
+            }
+        }
+
+        public void UpdateDisplay()
+        {
+            scoreTB.Text = ((int)CookieScore).ToString();
         }
 
         private void CookieButton_Click(object sender, RoutedEventArgs e)
