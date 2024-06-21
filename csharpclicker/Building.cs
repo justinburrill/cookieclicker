@@ -1,52 +1,88 @@
 ﻿using scripts;
+using System.Windows;
+using System.Windows.Controls;
 
 namespace csharpclicker
 {
-    public class Building(string name, double cps, double cost)
+    public class Building
     {
-        readonly double clicksPerSecond = cps;
-        readonly double baseCost = cost;
-        private string _name = name;
-        public string Name
+        readonly double baseClicksPerSecond;
+        readonly double baseCost;
+        TextBlock text;
+        Button button;
+        public readonly StackPanel panel;
+        public string Name { get; set; }
+        int _quantity = 0;
+        public int Quantity
         {
-            get { return _name; }
-            set { _name = value; MainWindow.GetMW().UpdateDisplay(); }
+            get { return _quantity; }
+            set
+            {
+                _quantity = value;
+                text = ShopItemGenerators.GenerateItemText(this);
+            }
         }
 
-        public int Quantity { get; set; } = 0;
+        public Building(string name, double cps, double cost)
+        {
+            Name = name;
+            baseCost = cost;
+            baseClicksPerSecond = cps;
+            text = ShopItemGenerators.GenerateItemText(this);
+            button = ShopItemGenerators.GenerateBuyButton(this);
+            panel = ShopItemGenerators.GeneratePanel(text, button);
+
+        }
 
         public static string[] GetBuildingTypes()
         {
             return ["Autoclicker", "Grandma", "Farm", "Factory", "Reactor"];
         }
 
-        public static Building[] GetBuildings()
+        public static double GetTotalCPS(Building[] buildings)
+        {
+
+            double total = 0;
+            foreach (Building b in buildings)
+            {
+                total += b.GetCPS();
+            }
+
+            return total;
+        }
+
+        public static Building[] InitBuildings()
         {
             return BuildingJsonReader.GetBuildings();
         }
 
-        public double Buy(double score, int q = 1)
+        public void Buy(int q = 1)
         {
-            double price = this.GetPrice(q);
+            MainWindow window = (MainWindow)Application.Current.MainWindow;
+            double score = window.CookieScore;
+            double price = GetPrice(q);
+
             if (score >= price)
             {
                 Quantity += q;
-                return price;
+                ((MainWindow)Application.Current.MainWindow).CookieScore -= price;
+                MessageBox.Show(String.Format("Successful purchase. You were charged {0}", price));
             }
             else
             {
-                return -1;
+
+                MessageBox.Show("Insufficient funds broke ass");
+
             }
         }
-
         public double GetPrice(int count = 1)
         {
             return math.buildingPrice(baseCost, Quantity + count);
         }
 
-        public double GetClicks()
+        public double GetCPS()
         {
-            return Quantity * clicksPerSecond;
+            return Quantity * baseClicksPerSecond;
 
         }
 

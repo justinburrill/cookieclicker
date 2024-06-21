@@ -2,8 +2,8 @@
 namespace scripts
 
 module math =
-    let buildingPrice (baseCost: float) (count: float) : float = 
-        baseCost * (1.15 ** (count-float 1))
+    let buildingPrice (baseCost: float) (count: float) : int = 
+        int (baseCost * (1.15 ** (count-float 1)))
 
 
 module strings = 
@@ -13,5 +13,6 @@ module strings =
             x
         else
             str
+
 
 

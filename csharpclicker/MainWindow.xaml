@@ -8,6 +8,7 @@
         Title="MainWindow" Height="600" Width="800">
     <Grid>
         <TextBlock Text="0" Name="scoreTB" FontSize="40"/>
+        <TextBlock Text="0" Name="cpsTB" FontSize="25" Margin="0,40,0,0"/>
         <Ellipse HorizontalAlignment="Center" Height="300" Fill="NavajoWhite" VerticalAlignment="Center" Width="300" MouseUp="CookieButton_Click"/>
         <StackPanel Name="ShopBox" HorizontalAlignment="Right" VerticalAlignment="Top" Width="170" Height="500" >
 
