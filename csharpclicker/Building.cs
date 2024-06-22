@@ -6,7 +6,7 @@ namespace Csharpclicker
 {
     public class Building
     {
-        private bool built = false;
+        public bool built = false;
         readonly double baseClicksPerSecond;
         readonly double baseCost;
         private TextBlock _ShopText;
@@ -21,7 +21,7 @@ namespace Csharpclicker
                 }
                 _ShopText = value;
                 if (built)
-                    UpdateShopText(_ShopText);
+                    UpdateShopText(value);
             }
         }
         readonly Button button;
@@ -73,7 +73,20 @@ namespace Csharpclicker
             return BuildingJsonReader.GetBuildings();
         }
 
-        public void UpdateShopText(TextBlock text)
+        void ReloadText()
+        {
+            ShopText = ShopItemGenerators.GenerateItemText(this);
+        }
+
+        public static void ReloadAllText()
+        {
+            foreach (Building b in ((MainWindow)Application.Current.MainWindow).buildings)
+            {
+                b.ReloadText();
+            }
+        }
+
+        void UpdateShopText(TextBlock text)
         {
             foreach (StackPanel panel in ((MainWindow)(Application.Current.MainWindow)).ShopBox.Children)
             {
@@ -85,6 +98,7 @@ namespace Csharpclicker
                 }
             }
         }
+
         public void Buy(int q = 1)
         {
             MainWindow window = (MainWindow)Application.Current.MainWindow;
@@ -103,12 +117,12 @@ namespace Csharpclicker
 
             }
         }
+
         public double GetPrice(int count = 1) { return math.buildingPrice(baseCost, Quantity + count); }
 
         public double GetTotalCPS() { return Quantity * baseClicksPerSecond; }
 
         public double GetCPSperCost() { return Math.Round(baseClicksPerSecond / GetPrice(), 3); }
-
 
         public double GetCostperCPS() { return Math.Round(GetPrice() / baseClicksPerSecond); }
 

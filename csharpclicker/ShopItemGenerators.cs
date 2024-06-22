@@ -55,9 +55,10 @@ namespace Csharpclicker
             string line1 = string.Format("{0} x{1}", building.Name, building.Quantity);
             string line2 = string.Format("Price: {0}", (int)building.GetPrice());
             string line3 = string.Format("CPS/$: {0} $/CPS: {1}", building.GetCPSperCost(), building.GetCostperCPS());
+            MainWindow mw = ((MainWindow)Application.Current.MainWindow);
             TextBlock textBlock = new()
             {
-                Text = line1 + "\n" + line2 + "\n" + line3
+                Text = line1 + "\n" + line2 + (building.built && mw.ShowStats ? "\n" + line3 : "")
             };
 
             return textBlock;

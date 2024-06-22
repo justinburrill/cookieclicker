@@ -7,6 +7,16 @@ namespace Csharpclicker
     /// </summary>
     public partial class MainWindow : Window
     {
+        bool _showStats = false;
+        public bool ShowStats
+        {
+            get { return _showStats; }
+            set
+            {
+                _showStats = value;
+                Building.ReloadAllText();
+            }
+        }
         double _cookieScore = 0;
         public double CookieScore
         {
@@ -72,6 +82,11 @@ namespace Csharpclicker
         private void CookieButton_Click(object sender, RoutedEventArgs e)
         {
             ClickCookie();
+        }
+
+        private void ToggleAdvStatsButton_Click(object sender, RoutedEventArgs e)
+        {
+            ShowStats = !ShowStats;
         }
     }
 }
