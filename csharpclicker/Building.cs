@@ -2,15 +2,30 @@
 using System.Windows;
 using System.Windows.Controls;
 
-namespace csharpclicker
+namespace Csharpclicker
 {
     public class Building
     {
+        private bool built = false;
         readonly double baseClicksPerSecond;
         readonly double baseCost;
-        TextBlock text;
-        Button button;
-        public readonly StackPanel panel;
+        private TextBlock _ShopText;
+        TextBlock ShopText
+        {
+            get { return _ShopText; }
+            set
+            {
+                if (value.Text is null)
+                {
+                    throw new ArgumentNullException("boooo");
+                }
+                _ShopText = value;
+                if (built)
+                    UpdateShopText(_ShopText);
+            }
+        }
+        readonly Button button;
+        public StackPanel panel;
         public string Name { get; set; }
         int _quantity = 0;
         public int Quantity
@@ -19,7 +34,8 @@ namespace csharpclicker
             set
             {
                 _quantity = value;
-                text = ShopItemGenerators.GenerateItemText(this);
+                ShopText = ShopItemGenerators.GenerateItemText(this);
+                ((MainWindow)Application.Current.MainWindow).UpdateCPS();
             }
         }
 
@@ -28,9 +44,10 @@ namespace csharpclicker
             Name = name;
             baseCost = cost;
             baseClicksPerSecond = cps;
-            text = ShopItemGenerators.GenerateItemText(this);
+            _ShopText = ShopItemGenerators.GenerateItemText(this);
             button = ShopItemGenerators.GenerateBuyButton(this);
-            panel = ShopItemGenerators.GeneratePanel(text, button);
+            panel = ShopItemGenerators.GeneratePanel(ShopText, button);
+            built = true;
 
         }
 
@@ -39,13 +56,13 @@ namespace csharpclicker
             return ["Autoclicker", "Grandma", "Farm", "Factory", "Reactor"];
         }
 
-        public static double GetTotalCPS(Building[] buildings)
+        public static double GetCPSFromAllBuildings(Building[] buildings)
         {
 
             double total = 0;
             foreach (Building b in buildings)
             {
-                total += b.GetCPS();
+                total += b.GetTotalCPS();
             }
 
             return total;
@@ -56,6 +73,18 @@ namespace csharpclicker
             return BuildingJsonReader.GetBuildings();
         }
 
+        public void UpdateShopText(TextBlock text)
+        {
+            foreach (StackPanel panel in ((MainWindow)(Application.Current.MainWindow)).ShopBox.Children)
+            {
+                string oldText = ((TextBlock)panel.Children[0]).Text;
+                if (oldText.StartsWith(Name))
+                {
+                    panel.Children.RemoveAt(0);
+                    panel.Children.Insert(0, text);
+                }
+            }
+        }
         public void Buy(int q = 1)
         {
             MainWindow window = (MainWindow)Application.Current.MainWindow;
@@ -66,7 +95,6 @@ namespace csharpclicker
             {
                 Quantity += q;
                 ((MainWindow)Application.Current.MainWindow).CookieScore -= price;
-                MessageBox.Show(String.Format("Successful purchase. You were charged {0}", price));
             }
             else
             {
@@ -75,16 +103,14 @@ namespace csharpclicker
 
             }
         }
-        public double GetPrice(int count = 1)
-        {
-            return math.buildingPrice(baseCost, Quantity + count);
-        }
+        public double GetPrice(int count = 1) { return math.buildingPrice(baseCost, Quantity + count); }
 
-        public double GetCPS()
-        {
-            return Quantity * baseClicksPerSecond;
+        public double GetTotalCPS() { return Quantity * baseClicksPerSecond; }
 
-        }
+        public double GetCPSperCost() { return Math.Round(baseClicksPerSecond / GetPrice(), 3); }
+
+
+        public double GetCostperCPS() { return Math.Round(GetPrice() / baseClicksPerSecond); }
 
     }
 }

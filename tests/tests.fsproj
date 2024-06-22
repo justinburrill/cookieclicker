@@ -27,8 +27,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\csharpclicker\csharpclicker.csproj" />
-    <ProjectReference Include="..\fsharpscripts\fsharpscripts.fsproj" />
+    <ProjectReference Include="..\csharpclicker\Csharpclicker.csproj" />
+    <ProjectReference Include="..\fsharpscripts\Fsharpscripts.fsproj" />
   </ItemGroup>
 
 </Project>

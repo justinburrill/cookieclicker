@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 
-namespace csharpclicker
+namespace Csharpclicker
 {
     abstract internal class ShopItemGenerators
     {
@@ -9,7 +9,7 @@ namespace csharpclicker
         {
             return new StackPanel
             {
-                Height = 100,
+                Height = 75,
                 Width = 170,
                 Children = {
                     text,
@@ -52,10 +52,12 @@ namespace csharpclicker
 
         static public TextBlock GenerateItemText(Building building)
         {
-            string txt = string.Format("{0} x{1}\nPrice: {2}", building.Name, building.Quantity, Math.Round(building.GetPrice()));
+            string line1 = string.Format("{0} x{1}", building.Name, building.Quantity);
+            string line2 = string.Format("Price: {0}", (int)building.GetPrice());
+            string line3 = string.Format("CPS/$: {0} $/CPS: {1}", building.GetCPSperCost(), building.GetCostperCPS());
             TextBlock textBlock = new()
             {
-                Text = txt
+                Text = line1 + "\n" + line2 + "\n" + line3
             };
 
             return textBlock;

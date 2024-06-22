@@ -1,6 +1,6 @@
 {
   "Autoclicker": {
-    "cps": 0.1,
+    "cps": 0.2,
     "baseCost": 10
   },
   "Grandma": {
@@ -8,15 +8,19 @@
     "baseCost": 100
   },
   "Farm": {
-    "cps": 15,
+    "cps": 12,
     "baseCost": 1100
   },
-  "Factory": {
-    "cps": 80,
+  "Plantation": {
+    "cps": 70,
     "baseCost": 12000
   },
+  "Factory": {
+    "cps": 210,
+    "baseCost": 90000
+  },
   "Reactor": {
-    "cps": 300,
+    "cps": 1100,
     "baseCost": 500000
   }
 }

@@ -1,4 +1,4 @@
-﻿<Window x:Class="csharpclicker.MainWindow"
+﻿<Window x:Class="Csharpclicker.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -13,6 +13,8 @@
         <StackPanel Name="ShopBox" HorizontalAlignment="Right" VerticalAlignment="Top" Width="170" Height="500" >
 
         </StackPanel>
+
+
 
     </Grid>
 </Window>

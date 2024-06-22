@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\fsharpscripts\fsharpscripts.fsproj" />
+    <ProjectReference Include="..\fsharpscripts\Fsharpscripts.fsproj" />
   </ItemGroup>
 
 </Project>

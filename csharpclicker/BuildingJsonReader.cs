@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using System.Text.Json;
 using System.Windows;
-namespace csharpclicker
+namespace Csharpclicker
 {
     internal class BuildingJsonReader
     {
