@@ -1,27 +1,13 @@
-﻿using System.IO;
-using System.Text.Json;
-using System.Windows;
+﻿using System.Text.Json;
 namespace Csharpclicker
 {
-    internal class BuildingJsonReader
+    static class BuildingJsonReader
     {
-        // TODO: make this a relative path probably
-        static public string filePath = "C:\\src\\cookieclicker\\csharpclicker\\buildings.json";
-
-        static private JsonDocument? GetBuildingsJsonFromFile()
-        {
-            try { return JsonDocument.Parse(File.ReadAllText(filePath)); }
-            catch (FileNotFoundException e)
-            {
-                string txt = String.Format("Did you forget to make {1} absolute? {0}", e.Message, filePath);
-                MessageBox.Show(txt);
-            }
-            return null;
-        }
+        static readonly string Path = "buildings.json";
 
         static public Building[] GetBuildings()
         {
-            JsonDocument? json = GetBuildingsJsonFromFile();
+            JsonDocument? json = JsonReader.ReadJsonFromFile(Path);
             if (json == null) { return []; }
             JsonElement.ObjectEnumerator iter = json.RootElement.EnumerateObject();
             List<Building> buildings = [];

@@ -1,0 +1,37 @@
+{
+  "Double click": {
+    "price": 200,
+    "unlock": {
+      "cursor": 5
+    },
+    "description": "Clicking is twice as effective"
+  },
+  "Quadruple click": {
+    "price": 400,
+    "unlock": {
+      "cursor": 10
+    },
+    "description": "Clicking is twice as effective, again"
+  },
+  "Octuple click": {
+    "price": 800,
+    "unlock": {
+      "cursor": 20
+    },
+    "description": "Clicking is twice as effective"
+  },
+  "Sexdecuple click": {
+    "price": 1600,
+    "unlock": {
+      "cursor": 40
+    },
+    "description": "Clicking is twice as effective"
+  },
+  "Better baking": {
+    "price": 200,
+    "unlock": {
+      "grandma": 3
+    },
+    "description": "Grandmas are twice as effective"
+  }
+}

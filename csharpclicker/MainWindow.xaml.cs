@@ -76,7 +76,7 @@ namespace Csharpclicker
         {
             double cps = Building.GetCPSFromAllBuildings(buildings);
 
-            cpsTB.Text = Math.Round(cps, 1).ToString();
+            cpsTB.Text = string.Format("{0} per second", Math.Round(cps, 1));
         }
 
         private void CookieButton_Click(object sender, RoutedEventArgs e)

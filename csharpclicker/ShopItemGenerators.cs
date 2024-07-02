@@ -10,7 +10,7 @@ namespace Csharpclicker
             return new StackPanel
             {
                 Height = 75,
-                Width = 170,
+                Width = 140,
                 Children = {
                     text,
                     button

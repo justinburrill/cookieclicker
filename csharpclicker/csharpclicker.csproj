@@ -9,6 +9,20 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="buildings.json" />
+    <None Remove="upgrades.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="buildings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="upgrades.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\fsharpscripts\Fsharpscripts.fsproj" />
   </ItemGroup>
 

@@ -8,14 +8,17 @@
         Title="MainWindow" Height="600" Width="800">
     <Grid>
         <TextBlock Text="0" Name="scoreTB" FontSize="40"/>
-        <TextBlock Text="0" Name="cpsTB" FontSize="25" Margin="0,40,0,0"/>
+        <TextBlock Text="0 per second" Name="cpsTB" FontSize="18" Margin="0,40,0,0"/>
         <Ellipse HorizontalAlignment="Center" Height="300" Fill="NavajoWhite" VerticalAlignment="Center" Width="300" MouseUp="CookieButton_Click"/>
         <Button HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="140" Click="ToggleAdvStatsButton_Click" Content="Toggle advanced stats"></Button>
-        <StackPanel Name="ShopBox" HorizontalAlignment="Right" VerticalAlignment="Top" Width="170" Height="500" >
-
-        </StackPanel>
 
 
+
+        <ScrollViewer HorizontalScrollBarVisibility="Disabled" Width="170" Height="400" HorizontalAlignment="Right" VerticalAlignment="Top" >
+            <StackPanel Name="ShopBox" />
+        </ScrollViewer>
+
+        <StackPanel Name="UpgradesBox" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="180" Height="120" />
 
     </Grid>
 </Window>

@@ -51,9 +51,17 @@ namespace Csharpclicker
 
         }
 
-        public static string[] GetBuildingTypes()
+        public static BuildingType GetBuildingTypeFromString(string str)
         {
-            return ["Autoclicker", "Grandma", "Farm", "Factory", "Reactor"];
+            foreach (BuildingType item in Enum.GetValues(typeof(BuildingType)))
+            {
+                if (item.ToString() == str)
+                {
+                    return item;
+                }
+            }
+
+            throw new KeyNotFoundException(String.Format("Can't get a BuildingType from {0}", str));
         }
 
         public static double GetCPSFromAllBuildings(Building[] buildings)
